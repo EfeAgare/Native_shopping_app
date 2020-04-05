@@ -5,8 +5,9 @@ import Colors from '../../constants/Colors';
 import { FlatList } from 'react-native-gesture-handler';
 import CartItem from '../../components/shop/CartItem';
 import { removeFromCart } from '../../redux/actions/cart';
+import { addOrders } from '../../redux/actions/orders';
 
-const CartScreen = (props) => {
+const CartScreen = () => {
   const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
   const cartItems = useSelector((state) => {
     const tranformCartItems = [];
@@ -37,7 +38,7 @@ const CartScreen = (props) => {
           color={Colors.accent}
           title='Order Now'
           disabled={cartItems.length === 0}
-          onPress={() => {}}
+          onPress={() => dispatch(addOrders(cartItems, cartTotalAmount))}
         />
       </View>
       <FlatList
