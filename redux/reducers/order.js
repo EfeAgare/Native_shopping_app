@@ -11,7 +11,7 @@ const orderReducers = (state = initialState, action) => {
       const newOrder = new Order(
         new Date().toString(),
         action.orders.items,
-        action.orders.totalAmount,
+        action.orders.amount,
         new Date()
       );
       return {
