@@ -13,7 +13,7 @@ const cartReducers = (state = initialState, action) => {
       const prodPrice = addedProduct.price;
       const prodTitle = addedProduct.title;
 
-      const newOrUpdatedCartItem;
+      let newOrUpdatedCartItem;
 
       if (state.items[addedProduct.id]) {
         newOrUpdatedCartItem = new CartItem(

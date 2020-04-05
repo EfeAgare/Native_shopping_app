@@ -6,3 +6,4 @@ export const rootReducers = combineReducers({
   products: productReducers,
   cart: cartReducers,
 });
+ 
