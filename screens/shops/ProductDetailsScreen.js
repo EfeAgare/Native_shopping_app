@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 14,
     textAlign: 'center',
+    marginHorizontal: 20,
   },
   actions: {
     alignItems: 'center',
