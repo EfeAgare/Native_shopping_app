@@ -9,8 +9,7 @@ import Colors from '../constants/Colors';
 import CartScreen from '../screens/shops/CartScreen';
 import OrdersScreen from '../screens/shops/OrdersScreen';
 import {
-  createDrawerNavigator,
-  DrawerIconProps,
+  createDrawerNavigator
 } from 'react-navigation-drawer';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -50,6 +49,8 @@ const ProductNavigator = createStackNavigator(
 const OrdersNavigator = createStackNavigator(
   {
     Orders: OrdersScreen,
+    Cart: CartScreen,
+
   },
   {
     navigationOptions: {

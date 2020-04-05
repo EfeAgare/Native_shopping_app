@@ -3,6 +3,7 @@ import { StyleSheet, FlatList, Platform, Text } from 'react-native';
 import { useSelector } from 'react-redux';
 import CustomHeaderButtons from '../../components/UI/CustomHeaderButtons';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import OrderItem from '../../components/shop/OrderItem';
 
 const OrdersScreen = (props) => {
   const { orders } = useSelector((state) => state.orders);
@@ -11,7 +12,7 @@ const OrdersScreen = (props) => {
     <FlatList
       data={orders}
       keyExtractor={(item) => item.id}
-      renderItem={(itemData) => <Text>{itemData.item.totalAmount}</Text>}
+      renderItem={(itemData) => <OrderItem order={itemData.item} />}
     />
   );
 };
@@ -25,6 +26,19 @@ OrdersScreen.navigationOptions = (navData) => {
           title={'Menu'}
           iconName={Platform.OS === 'android' ? 'md-menu' : 'ios-menu'}
           onPress={() => navData.navigation.toggleDrawer()}
+        />
+      </HeaderButtons>
+    ),
+    headerRight: () => (
+      <HeaderButtons HeaderButtonComponent={CustomHeaderButtons}>
+        <Item
+          title={'Cart'}
+          iconName={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}
+          onPress={() =>
+            navData.navigation.navigate({
+              routeName: 'Cart',
+            })
+          }
         />
       </HeaderButtons>
     ),
