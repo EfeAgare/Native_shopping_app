@@ -1,4 +1,4 @@
-import { ADD_TO_CART } from '../constants/actionIndentifier';
+import { ADD_TO_CART, REMOVE_FROM_CART } from '../constants/actionIndentifier';
 import CartItem from '../../models/cart-item';
 
 const initialState = {
@@ -22,7 +22,6 @@ const cartReducers = (state = initialState, action) => {
           prodTitle,
           state.items[addedProduct.id].sum + prodPrice
         );
-     
       } else {
         newOrUpdatedCartItem = new CartItem(1, prodPrice, prodTitle, prodPrice);
       }
@@ -31,7 +30,35 @@ const cartReducers = (state = initialState, action) => {
         items: { ...state.items, [addedProduct.id]: newOrUpdatedCartItem },
         totalAmount: state.totalAmount + prodPrice,
       };
-    
+
+    case REMOVE_FROM_CART:
+      const selectecCartItem = state.items[action.productId];
+      const currentQty = selectecCartItem.quantity;
+
+      let updateCartItems;
+      if (currentQty > 1) {
+        const updateCartItem = new CartItem(
+          currentQty - 1,
+          selectecCartItem.productPrice,
+          selectecCartItem.productTitle,
+          selectecCartItem.sum - selectecCartItem.productPrice
+        );
+
+        updateCartItems = {
+          ...state.items,
+          [action.productId]: updateCartItem,
+        };
+      } else {
+        updateCartItems = { ...state.items };
+        delete updateCartItems[action.productId];
+      }
+
+      return {
+        ...state,
+        items: updateCartItems,
+        totalAmount: state.totalAmount - selectecCartItem.productPrice,
+      };
+
     default:
       return state;
   }
