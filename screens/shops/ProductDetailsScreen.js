@@ -31,7 +31,7 @@ const ProductDetailsScreen = (props) => {
           onPress={() => dispatch(cartActions.addToCart(selectedProduct))}
           color={Colors.primary}
         />
-      </View>
+      </View> 
 
       <Text style={styles.price}>${selectedProduct.price.toFixed(2)}</Text>
       <Text style={styles.description}>{selectedProduct.description}</Text>

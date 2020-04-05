@@ -13,7 +13,7 @@ import {
 import Colors from '../../constants/Colors';
 
 const ProductItem = (props) => {
-  const { imageUrl, title, price, onAddToCart } = props.product;
+  const { imageUrl, title, price } = props.product;
 
   let TouchableComponent = TouchableOpacity;
 
@@ -39,7 +39,7 @@ const ProductItem = (props) => {
           <Button
             color={Colors.primary}
             title='To Cart'
-            onPress={() => onAddToCart}
+            onPress={props.onAddToCart}
           />
         </View>
       </TouchableComponent>

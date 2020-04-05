@@ -1,10 +1,11 @@
 import React from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, Platform } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-
 import ProductItem from '../../components/shop/ProductItem';
 
 import * as cartActions from '../../redux/actions/cart';
+import CustomHeaderButtons from '../../components/UI/CustomHeaderButtons';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 const ProductsOverviewScreen = (props) => {
   const { availableProduct } = useSelector((state) => state.products);
@@ -36,6 +37,19 @@ const ProductsOverviewScreen = (props) => {
 
 export default ProductsOverviewScreen;
 
-ProductsOverviewScreen.navigationOptions = {
-  headerTitle: 'All Products',
+ProductsOverviewScreen.navigationOptions = (navData) => {
+  return {
+    headerTitle: 'All Products',
+    headerRight: () => (
+      <HeaderButtons HeaderButtonComponent={CustomHeaderButtons}>
+        <Item
+          title={'Cart'}
+          iconName={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}
+          onPress={() => navData.navigation.navigate({
+            routeName: 'Cart'
+          })}
+        />
+      </HeaderButtons>
+    ),
+  };
 };
