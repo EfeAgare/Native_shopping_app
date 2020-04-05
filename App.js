@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { Provider } from 'react-redux';
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
-import { useScreens } from 'react-native-screens';
+// import { useScreens } from 'react-native-screens';
 
-import { store } from './store/store';
+import { store } from './redux/store/store';
 import ProductNavigation from './navigations/ProductNavigation';
 
-useScreens();
+// useScreens();
 
 const fetchFonts = async () => {
   await Promise.all([

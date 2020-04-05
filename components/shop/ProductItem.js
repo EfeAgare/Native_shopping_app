@@ -22,7 +22,7 @@ const ProductItem = (props) => {
   }
   return (
     <View style={styles.product}>
-      <TouchableComponent onPress={props.onViewDetails} useForeground> 
+      <TouchableComponent onPress={props.onViewDetails} useForeground>
         <View style={styles.imageContainer}>
           <Image style={styles.image} source={{ uri: imageUrl }} />
         </View>
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: 'white',
     height: 300,
-    margin: 20
+    margin: 20,
   },
   image: {
     width: '100%',
@@ -73,10 +73,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     marginVertical: 4,
+    fontFamily: 'open-sans-bold',
   },
   price: {
     fontSize: 14,
     color: '#888',
+    fontFamily: 'open-sans',
   },
   actions: {
     flexDirection: 'row',

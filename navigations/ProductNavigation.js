@@ -15,10 +15,11 @@ const ProductNavigation = createStackNavigator(
   },
   {
     defaultNavigationOptions: {
-      headerStyle: {
+      headerStyle: { 
         backgroundColor: Platform.OS === 'android' ? Colors.primary : '',
       },
       headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primary,
+      headerBackTitle: null
     },
   }
 );
