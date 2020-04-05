@@ -7,6 +7,9 @@ import CartItem from '../../components/shop/CartItem';
 import { removeFromCart } from '../../redux/actions/cart';
 import { addOrders } from '../../redux/actions/orders';
 
+import CustomHeaderButtons from '../../components/UI/CustomHeaderButtons';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+
 const CartScreen = () => {
   const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
   const cartItems = useSelector((state) => {
@@ -57,8 +60,23 @@ const CartScreen = () => {
   );
 };
 
-CartScreen.navigationOptions = {
-  headerTitle: 'Your Cart',
+CartScreen.navigationOptions = (navData) => {
+  return {
+    headerTitle: 'Your Cart',
+    headerRight: () => (
+      <HeaderButtons HeaderButtonComponent={CustomHeaderButtons}>
+        <Item
+          title={'Menu'}
+          iconName={Platform.OS === 'android' ? 'md-create' : 'ios-create'}
+          onPress={() =>
+            navData.navigation.navigate({
+              routeName: 'ProductsOverview',
+            })
+          }
+        />
+      </HeaderButtons>
+    ),
+  };
 };
 
 export default CartScreen;
