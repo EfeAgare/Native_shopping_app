@@ -7,7 +7,7 @@ import {
   Platform,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useDispatch } from 'react-redux';
+
 
 const CartItem = (props) => {
   const { quantity, productTitle, sum } = props.cartItem;
