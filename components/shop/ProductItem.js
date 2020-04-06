@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   },
   details: {
     alignItems: 'center',
-    height: '15%',
+    height: '16%',
     padding: 5,
   },
   title: {
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: '24%',
+    height: '23%',
     paddingHorizontal: 20,
   },
   imageContainer: {

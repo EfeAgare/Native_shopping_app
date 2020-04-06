@@ -13,6 +13,7 @@ import {
 } from 'react-navigation-drawer';
 import { Ionicons } from '@expo/vector-icons';
 import UserProductScreen from '../screens/user/UserProductScreen';
+import EditProductScreen from '../screens/user/EditProductScreen';
 
 const defaultNavOptions = {
   headerStyle: {
@@ -70,7 +71,8 @@ const OrdersNavigator = createStackNavigator(
 
 const UserNavigator = createStackNavigator(
   {
-    UserScreen: UserProductScreen
+    UserScreen: UserProductScreen,
+    EditScreen: EditProductScreen
 
   },
   {

@@ -11,12 +11,11 @@ import { deleteProduct } from '../../redux/actions/products';
 const UserProductScreen = (props) => {
   const userProduct = useSelector((state) => state.products.userProduct);
 
-  const selectItemHandler = (id, title) => {
+  const editProductHandler = (id) => {
     props.navigation.navigate({
-      routeName: 'ProductDetails',
+      routeName: 'EditScreen',
       params: {
         productId: id,
-        productTitle: title,
       },
     });
   };
@@ -30,11 +29,15 @@ const UserProductScreen = (props) => {
         <ProductItem
           product={itemData.item}
           onSelect={() => {
-            selectItemHandler(itemData.item.id, itemData.item.title);
+            editProductHandler(itemData.item.id);
           }}
           onAddToCart={() => {}}
         >
-          <Button color={Colors.primary} title='Edit' onPress={() => {}} />
+          <Button
+            color={Colors.primary}
+            title='Edit'
+            onPress={() => editProductHandler(itemData.item.id)}
+          />
           <Button
             color={Colors.primary}
             title='Delete'
@@ -55,6 +58,15 @@ UserProductScreen.navigationOptions = (navData) => {
           title={'Menu'}
           iconName={Platform.OS === 'android' ? 'md-menu' : 'ios-menu'}
           onPress={() => navData.navigation.toggleDrawer()}
+        />
+      </HeaderButtons>
+    ),
+    headerRight: () => (
+      <HeaderButtons HeaderButtonComponent={CustomHeaderButtons}>
+        <Item
+          title={'Menu'}
+          iconName={Platform.OS === 'android' ? 'md-create' : 'ios-create'}
+          onPress={() => navData.navigation.navigate('EditScreen')}
         />
       </HeaderButtons>
     ),
