@@ -50,6 +50,7 @@ const CartScreen = () => {
         renderItem={(itemData) => (
           <CartItem
             cartItem={itemData.item}
+            deleteAble={true}
             onRemoveItem={() => {
               dispatch(removeFromCart(itemData.item.productId));
             }}
@@ -67,7 +68,7 @@ CartScreen.navigationOptions = (navData) => {
       <HeaderButtons HeaderButtonComponent={CustomHeaderButtons}>
         <Item
           title={'Menu'}
-          iconName={Platform.OS === 'android' ? 'md-create' : 'ios-create'}
+          iconName={Platform.OS === 'android' ? 'md-list' : 'ios-list'}
           onPress={() =>
             navData.navigation.navigate({
               routeName: 'ProductsOverview',
