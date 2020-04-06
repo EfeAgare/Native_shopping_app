@@ -1,16 +1,27 @@
 import React from 'react';
-import { FlatList, Platform } from 'react-native';
+import { FlatList, Platform, Button } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import ProductItem from '../../components/shop/ProductItem';
 
 import * as cartActions from '../../redux/actions/cart';
 import CustomHeaderButtons from '../../components/UI/CustomHeaderButtons';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import Colors from '../../constants/Colors';
 
 const ProductsOverviewScreen = (props) => {
   const { availableProduct } = useSelector((state) => state.products);
 
   const dispatch = useDispatch();
+
+  const selectItemHandler = (id, title) => {
+    props.navigation.navigate({
+      routeName: 'ProductDetails',
+      params: {
+        productId: id,
+        productTitle: title,
+      },
+    });
+  };
   return (
     <FlatList
       data={availableProduct}
@@ -18,17 +29,24 @@ const ProductsOverviewScreen = (props) => {
       renderItem={(itemData) => (
         <ProductItem
           product={itemData.item}
-          onViewDetails={() =>
-            props.navigation.navigate({
-              routeName: 'ProductDetails',
-              params: {
-                productId: itemData.item.id,
-                productTitle: itemData.item.title,
-              },
-            })
-          }
+          onSelect={() => {
+            selectItemHandler(itemData.item.id, itemData.item.title);
+          }}
           onAddToCart={() => dispatch(cartActions.addToCart(itemData.item))}
-        />
+        >
+          <Button
+            color={Colors.primary}
+            title='View Betails'
+            onPress={() => {
+              selectItemHandler(itemData.item.id, itemData.item.title);
+            }}
+          />
+          <Button
+            color={Colors.primary}
+            title='To Cart'
+            onPress={() => dispatch(cartActions.addToCart(itemData.item))}
+          />
+        </ProductItem>
       )}
       style={{ width: '100%' }}
     />
