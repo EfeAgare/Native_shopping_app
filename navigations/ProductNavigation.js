@@ -12,6 +12,7 @@ import {
   createDrawerNavigator
 } from 'react-navigation-drawer';
 import { Ionicons } from '@expo/vector-icons';
+import UserProductScreen from '../screens/user/UserProductScreen';
 
 const defaultNavOptions = {
   headerStyle: {
@@ -66,11 +67,33 @@ const OrdersNavigator = createStackNavigator(
   }
 );
 
+
+const UserNavigator = createStackNavigator(
+  {
+    UserScreen: UserProductScreen
+
+  },
+  {
+    navigationOptions: {
+      drawerIcon: (drawerConfig) => (
+        <Ionicons
+          name={Platform.OS === 'android' ? 'md-create' : 'ios-create'}
+          size={23}
+          color={drawerConfig.tintColors}
+        />
+      ),
+    },
+    defaultNavigationOptions: defaultNavOptions,
+  }
+);
+
+
 // Drawer Navigation
 const ShopNavigator = createDrawerNavigator(
   {
     Products: ProductNavigator,
     Orders: OrdersNavigator,
+    MyProducts: UserNavigator 
   },
   {
     contentOptions: {
