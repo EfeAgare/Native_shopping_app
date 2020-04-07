@@ -9,7 +9,7 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import Colors from '../../constants/Colors';
 
 const ProductsOverviewScreen = (props) => {
-  const { availableProduct } = useSelector((state) => state.products);
+  const availableProduct  = useSelector((state) => state.products.availableProduct);
 
   const dispatch = useDispatch();
 

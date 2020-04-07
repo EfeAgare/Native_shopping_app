@@ -9,8 +9,7 @@ import {
   TouchableNativeFeedback,
   Platform,
 } from 'react-native';
-
-import Colors from '../../constants/Colors';
+import Card from '../UI/Card';
 
 const ProductItem = (props) => {
   const { imageUrl, title, price } = props.product;
@@ -21,7 +20,7 @@ const ProductItem = (props) => {
     TouchableComp = TouchableNativeFeedback;
   }
   return (
-    <View style={styles.product}>
+    <Card style={styles.product}>
       <TouchableComponent onPress={props.onSelect} useForeground>
         <View style={styles.imageContainer}>
           <Image style={styles.image} source={{ uri: imageUrl }} />
@@ -32,7 +31,7 @@ const ProductItem = (props) => {
         </View>
         <View style={styles.actions}>{props.children}</View>
       </TouchableComponent>
-    </View>
+    </Card>
   );
 };
 
@@ -40,13 +39,6 @@ export default ProductItem;
 
 const styles = StyleSheet.create({
   product: {
-    shadowColor: 'black',
-    shadowOpacity: 0.2,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 8,
-    elevation: 5,
-    borderRadius: 10,
-    backgroundColor: 'white',
     height: 300,
     margin: 20,
   },

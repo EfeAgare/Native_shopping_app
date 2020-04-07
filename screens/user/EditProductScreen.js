@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
-import { StyleSheet, ScrollView, TextInput, Text, View } from 'react-native';
+import React, { useState, useCallback, useEffect } from 'react';
+import {
+  StyleSheet,
+  ScrollView,
+  TextInput,
+  Text,
+  View
+} from 'react-native';
 import CustomHeaderButtons from '../../components/UI/CustomHeaderButtons';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import Colors from '../../constants/Colors';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { createProduct, updateProduct } from '../../redux/actions/products';
 
 const EditProductScreen = (props) => {
   const productId = props.navigation.getParam('productId');
@@ -18,9 +24,21 @@ const EditProductScreen = (props) => {
   const [description, setDescription] = useState(
     editProduct ? editProduct.description : ''
   );
-  if (productId) {
-    useSelector;
-  }
+
+  const dispatch = useDispatch();
+
+  const submitHandler = useCallback(() => {
+    if (editProduct) {
+      dispatch(updateProduct(productId, title, imageUrl, description));
+    } else {
+      dispatch(createProduct(title, imageUrl, +price, description));
+    }
+    props.navigation.goBack()
+  }, [dispatch, productId, title, price, imageUrl, description]);
+
+  useEffect(() => {
+    props.navigation.setParams({ submit: submitHandler });
+  }, [submitHandler]);
   return (
     <ScrollView>
       <View style={styles.form}>
@@ -74,6 +92,7 @@ const EditProductScreen = (props) => {
 
 EditProductScreen.navigationOptions = (navData) => {
   const edit = navData.navigation.getParam('productId');
+  const submit = navData.navigation.getParam('submit');
   return {
     headerTitle: edit ? 'Edit Product' : 'Create Product',
     headerRight: () => (
@@ -83,7 +102,7 @@ EditProductScreen.navigationOptions = (navData) => {
           iconName={
             Platform.OS === 'android' ? 'md-checkmark' : 'ios-checkmark'
           }
-          onPress={() => navData.navigation.navigate('EditScreen')}
+          onPress={submit}
         />
       </HeaderButtons>
     ),
