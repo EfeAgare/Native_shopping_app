@@ -1,0 +1,4 @@
+export const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
+
+export const INPUT_CHANGE = 'INPUT_CHANGE';
+export const INPUT_BLUR = 'INPUT_BLUR';

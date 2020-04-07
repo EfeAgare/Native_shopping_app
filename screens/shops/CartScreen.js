@@ -9,6 +9,7 @@ import { addOrders } from '../../redux/actions/orders';
 
 import CustomHeaderButtons from '../../components/UI/CustomHeaderButtons';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import Card from '../../components/UI/Card';
 
 const CartScreen = () => {
   const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
