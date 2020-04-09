@@ -2,7 +2,7 @@ import {
   DELETE_PRODUCT,
   UPDATE_PRODUCT,
   CREATE_PRODUCT,
-  GET_PRODUCT,
+  GET_ALL_PRODUCT,
 } from '../constants/actionIndentifier';
 import { sendHttpRequest } from '../utils/apiInstance';
 import Product from '../../models/products';
@@ -96,7 +96,7 @@ export const fetchAllProduct = () => {
         );
       }
       dispatch({
-        type: GET_PRODUCT,
+        type: GET_ALL_PRODUCT,
         products: loadedProducts,
       });
     } catch (error) {

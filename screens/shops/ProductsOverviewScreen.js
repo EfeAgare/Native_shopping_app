@@ -18,20 +18,19 @@ import Colors from '../../constants/Colors';
 import { fetchAllProduct } from '../../redux/actions/products';
 
 const ProductsOverviewScreen = (props) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState();
   const dispatch = useDispatch();
 
   loadProducts = useCallback(async () => {
-    setErrorMessage(null)
-    setIsLoading(true);
+    setErrorMessage(null);
     try {
-      await dispatch(fetchAllProduct());
+      dispatch(fetchAllProduct());
     } catch (error) {
       setErrorMessage(error);
     }
-    setIsLoading(false);
-  }, [dispatch, setErrorMessage, setIsLoading]);
+
+  }, [dispatch, setErrorMessage]);
 
   const availableProduct = useSelector(
     (state) => state.products.availableProduct
@@ -40,7 +39,8 @@ const ProductsOverviewScreen = (props) => {
   // initial load
   useEffect(() => {
     loadProducts();
-  }, [loadProducts]);
+    setIsLoading(false);
+  }, [loadProducts, setIsLoading]);
 
   // set up listener for live update, subsequent loading
   useEffect(() => {
@@ -51,7 +51,6 @@ const ProductsOverviewScreen = (props) => {
       willFocus.remove(); // clean up
     };
   }, [loadProducts]);
-
 
   const selectItemHandler = (id, title) => {
     props.navigation.navigate({
@@ -92,6 +91,8 @@ const ProductsOverviewScreen = (props) => {
 
   return (
     <FlatList
+      onRefresh={loadProducts}
+      refreshing={isLoading}
       data={availableProduct}
       keyExtractor={(item) => item.id}
       renderItem={(itemData) => (

@@ -3,7 +3,7 @@ import {
   DELETE_PRODUCT,
   CREATE_PRODUCT,
   UPDATE_PRODUCT,
-  GET_PRODUCT,
+  GET_ALL_PRODUCT,
 } from '../constants/actionIndentifier';
 import Product from '../../models/products';
 
@@ -14,7 +14,7 @@ const initialState = {
 
 const productReducers = (state = initialState, action) => {
   switch (action.type) {
-    case GET_PRODUCT:
+    case GET_ALL_PRODUCT:
       return {
         ...state,
         availableProduct: action.products,

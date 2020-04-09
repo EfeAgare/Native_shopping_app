@@ -101,12 +101,12 @@ const EditProductScreen = (props) => {
       } else {
         dispatch(createProduct(title, imageUrl, +price, description));
       }
+      props.navigation.goBack();
     } catch (error) {
       setError(error);
     }
 
     setIsLoading(false);
-    props.navigation.goBack();
   }, [dispatch, productId, formState, setError, setIsLoading]);
 
   useEffect(() => {
@@ -129,10 +129,7 @@ const EditProductScreen = (props) => {
     return (
       <View style={styles.centered}>
         <Text>An error occured!</Text>
-        <Button
-          title='Try again'
-          color={Colors.primary}
-        />
+        <Button title='Try again' color={Colors.primary} />
       </View>
     );
   }
