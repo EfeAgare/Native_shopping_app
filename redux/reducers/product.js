@@ -3,6 +3,7 @@ import {
   DELETE_PRODUCT,
   CREATE_PRODUCT,
   UPDATE_PRODUCT,
+  GET_PRODUCT,
 } from '../constants/actionIndentifier';
 import Product from '../../models/products';
 
@@ -13,6 +14,12 @@ const initialState = {
 
 const productReducers = (state = initialState, action) => {
   switch (action.type) {
+    case GET_PRODUCT:
+      return {
+        ...state,
+        availableProduct: action.products,
+        userProduct: action.products.filter((prod) => prod.ownerId === 'u1'),
+      };
     case DELETE_PRODUCT:
       return {
         ...state,
@@ -26,7 +33,7 @@ const productReducers = (state = initialState, action) => {
 
     case CREATE_PRODUCT:
       const newProduct = new Product(
-        new Date().toString(),
+        action.product.id,
         'u1',
         action.product.title,
         action.product.imageUrl,
@@ -60,7 +67,7 @@ const productReducers = (state = initialState, action) => {
       );
       const updateAvailableProduct = [...state.availableProduct];
 
-      updateAvailableProduct[availableProductIndex] = updateProduct
+      updateAvailableProduct[availableProductIndex] = updateProduct;
 
       return {
         ...state,

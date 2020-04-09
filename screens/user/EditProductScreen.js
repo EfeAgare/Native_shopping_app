@@ -1,10 +1,11 @@
-import React, { useCallback, useEffect, useReducer } from 'react';
+import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import {
   StyleSheet,
   ScrollView,
   View,
   Alert,
   KeyboardAvoidingView,
+  ActivityIndicator,
 } from 'react-native';
 import CustomHeaderButtons from '../../components/UI/CustomHeaderButtons';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
@@ -12,6 +13,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { createProduct, updateProduct } from '../../redux/actions/products';
 import { FORM_INPUT_UPDATE } from '../constant/useReducerState';
 import Input from '../../components/UI/Input';
+import Colors from '../../constants/Colors';
 
 const formReducer = (state, action) => {
   switch (action.type) {
@@ -44,6 +46,9 @@ const formReducer = (state, action) => {
 };
 
 const EditProductScreen = (props) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
+
   const productId = props.navigation.getParam('productId');
   const editProduct = useSelector((state) =>
     state.products.userProduct.find((prod) => prod.id === productId)
@@ -81,20 +86,28 @@ const EditProductScreen = (props) => {
 
   const { title, imageUrl, description, price } = formState.inputValues;
 
-  const submitHandler = useCallback(() => {
+  const submitHandler = useCallback(async () => {
     if (!formState.formIsValid) {
       Alert.alert('Wrong Input', 'Please check the errors in the form.', [
         { text: 'Okay' },
       ]);
       return;
     }
-    if (editProduct) {
-      dispatch(updateProduct(productId, title, imageUrl, description));
-    } else {
-      dispatch(createProduct(title, imageUrl, +price, description));
+    setIsLoading(true);
+    setError(null);
+    try {
+      if (editProduct) {
+        dispatch(updateProduct(productId, title, imageUrl, description));
+      } else {
+        dispatch(createProduct(title, imageUrl, +price, description));
+      }
+    } catch (error) {
+      setError(error);
     }
+
+    setIsLoading(false);
     props.navigation.goBack();
-  }, [dispatch, productId, formState]);
+  }, [dispatch, productId, formState, setError, setIsLoading]);
 
   useEffect(() => {
     props.navigation.setParams({ submit: submitHandler });
@@ -112,6 +125,32 @@ const EditProductScreen = (props) => {
     [dispatchFormState]
   );
 
+  if (error) {
+    return (
+      <View style={styles.centered}>
+        <Text>An error occured!</Text>
+        <Button
+          title='Try again'
+          color={Colors.primary}
+        />
+      </View>
+    );
+  }
+  if (isLoading) {
+    return (
+      <View style={styles.centered}>
+        <ActivityIndicator size='large' color={Colorslors.primary} />
+      </View>
+    );
+  }
+  if (!isLoading && editProduct.length === 0) {
+    return (
+      <View style={styles.centered}>
+        <Text>No products found. Maybe start adding some!</Text>
+      </View>
+    );
+  }
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -124,7 +163,6 @@ const EditProductScreen = (props) => {
             id='title'
             autoCapitalize='sentences'
             autoCorrect
-            returnKeyType='next'
             label='Title'
             errorText='Please Enter a valid Title'
             onInputChange={onInputChangeHandler}
@@ -136,11 +174,9 @@ const EditProductScreen = (props) => {
             <Input
               id='price'
               autoCorrect
-              returnKeyType='next'
               label='Price'
               errorText='Please Enter a valid Price'
               keyboardType='decimal-pad'
-              returnKeyType='next'
               onInputChange={onInputChangeHandler}
               initialValue={''}
               required
@@ -151,11 +187,9 @@ const EditProductScreen = (props) => {
             id='imageUrl'
             autoCapitalize='sentences'
             autoCorrect
-            returnKeyType='next'
             label='ImageUrl'
             errorText='Please Enter a valid imageUrl'
             keyboardType='default'
-            returnKeyType='next'
             onInputChange={onInputChangeHandler}
             initialValue={editProduct ? editProduct.imageUrl : ''}
             initiallyValid={!!editProduct}
@@ -165,7 +199,6 @@ const EditProductScreen = (props) => {
             id='description'
             autoCapitalize='sentences'
             autoCorrect
-            returnKeyType='next'
             label='Description'
             errorText='Please Enter a valid decription'
             keyboardType='default'
@@ -208,5 +241,10 @@ export default EditProductScreen;
 const styles = StyleSheet.create({
   form: {
     margin: 20,
+  },
+  centered: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
