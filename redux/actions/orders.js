@@ -3,11 +3,12 @@ import { sendHttpRequest } from '../utils/apiInstance';
 import Order from '../../models/order';
 
 export const addOrders = (cartItems, totalAmount) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const { token, userId } = getState().auth;
     try {
       const date = new Date();
       const orders = await sendHttpRequest(
-        '/orders/u1.json',
+        `/orders/${userId}.json?auth=${token}`,
         'POST',
         JSON.stringify({
           cartItems,
@@ -33,9 +34,13 @@ export const addOrders = (cartItems, totalAmount) => {
 };
 
 export const getOrders = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const { token, userId } = getState().auth;
     try {
-      const orders = await sendHttpRequest('/orders/u1.json', 'GET');
+      const orders = await sendHttpRequest(
+        `/orders/${userId}.json?auth=${token}`,
+        'GET'
+      );
 
       const loadedOrders = [];
       for (const key in orders) {

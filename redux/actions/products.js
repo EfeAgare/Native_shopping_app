@@ -8,19 +8,21 @@ import { sendHttpRequest } from '../utils/apiInstance';
 import Product from '../../models/products';
 
 export const deleteProduct = (id) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const token = getState().auth.token;
     try {
-      await sendHttpRequest(`/products/${id}.json`, 'DELETE');
+      await sendHttpRequest(`/products/${id}.json?auth=${token}`, 'DELETE');
       return dispatch({ type: DELETE_PRODUCT, productId: id });
     } catch (error) {}
   };
 };
 
 export const updateProduct = (id, title, imageUrl, description) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const token = getState().auth.token;
     try {
       await sendHttpRequest(
-        `/products/${id}.json`,
+        `/products/${id}.json?auth=${token}`,
         'PATCH',
         JSON.stringify({
           title,
@@ -46,16 +48,18 @@ export const updateProduct = (id, title, imageUrl, description) => {
 };
 
 export const createProduct = (title, imageUrl, price, description) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const { token, userId } = getState().auth;
     try {
       const product = await sendHttpRequest(
-        '/products.json',
+        `/products.json?auth=${token}`,
         'POST',
         JSON.stringify({
           title,
           imageUrl,
           description,
           price,
+          ownerId: userId,
         }),
         { 'content-type': 'application/json' }
       );
@@ -68,6 +72,7 @@ export const createProduct = (title, imageUrl, price, description) => {
           price,
           imageUrl,
           description,
+          ownerId: userId,
         },
       });
     } catch (error) {
@@ -77,7 +82,8 @@ export const createProduct = (title, imageUrl, price, description) => {
 };
 
 export const fetchAllProduct = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const userId = getState().auth.userId;
     try {
       const products = await sendHttpRequest('/products.json', 'GET');
 
@@ -87,7 +93,7 @@ export const fetchAllProduct = () => {
         loadedProducts.push(
           new Product(
             key,
-            'u1',
+            products[key].ownerId,
             products[key].title,
             products[key].imageUrl,
             products[key].description,
@@ -98,6 +104,7 @@ export const fetchAllProduct = () => {
       dispatch({
         type: GET_ALL_PRODUCT,
         products: loadedProducts,
+        ownerId: userId,
       });
     } catch (error) {
       throw error.message;

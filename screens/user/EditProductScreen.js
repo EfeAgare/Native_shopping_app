@@ -5,6 +5,7 @@ import {
   View,
   Alert,
   KeyboardAvoidingView,
+  Text,
   ActivityIndicator,
 } from 'react-native';
 import CustomHeaderButtons from '../../components/UI/CustomHeaderButtons';
@@ -15,7 +16,7 @@ import { FORM_INPUT_UPDATE } from '../constant/useReducerState';
 import Input from '../../components/UI/Input';
 import Colors from '../../constants/Colors';
 
-const formReducer = (state, action) => {
+export const formReducer = (state, action) => {
   switch (action.type) {
     case FORM_INPUT_UPDATE:
       const updateValues = {
@@ -53,6 +54,7 @@ const EditProductScreen = (props) => {
   const editProduct = useSelector((state) =>
     state.products.userProduct.find((prod) => prod.id === productId)
   );
+
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
@@ -97,9 +99,9 @@ const EditProductScreen = (props) => {
     setError(null);
     try {
       if (editProduct) {
-        dispatch(updateProduct(productId, title, imageUrl, description));
+        await dispatch(updateProduct(productId, title, imageUrl, description));
       } else {
-        dispatch(createProduct(title, imageUrl, +price, description));
+        await dispatch(createProduct(title, imageUrl, +price, description));
       }
       props.navigation.goBack();
     } catch (error) {
@@ -136,14 +138,7 @@ const EditProductScreen = (props) => {
   if (isLoading) {
     return (
       <View style={styles.centered}>
-        <ActivityIndicator size='large' color={Colorslors.primary} />
-      </View>
-    );
-  }
-  if (!isLoading && editProduct.length === 0) {
-    return (
-      <View style={styles.centered}>
-        <Text>No products found. Maybe start adding some!</Text>
+        <ActivityIndicator size='large' color={Colors.primary} />
       </View>
     );
   }
