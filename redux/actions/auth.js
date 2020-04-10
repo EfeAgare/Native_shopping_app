@@ -1,4 +1,6 @@
-import { LOGIN, SIGN_UP } from '../constants/actionIndentifier';
+import { AsyncStorage } from 'react-native';
+
+import { AUTHENTICATE } from '../constants/actionIndentifier';
 import { sendHttpRequest } from '../utils/apiInstance';
 import { FIRE_BASE_API } from 'react-native-dotenv';
 
@@ -16,11 +18,11 @@ export const signupUser = (email, password) => {
         { 'content-type': 'application/json' }
       );
 
-      dispatch({
-        type: SIGN_UP,
-        token: signUp.idToken,
-        userId: signUp.localId,
-      });
+      dispatch(authenticate(signUp.localId, signUp.idToken));
+      const expirationDate = new Date(
+        new Date().getTime() + parseInt(signUp.expiresIn) * 1000
+      );
+      saveDataToStorage(signUp.idToken, signUp.localId, expirationDate);
     } catch (error) {
       throw error;
     }
@@ -41,9 +43,29 @@ export const loginUser = (email, password) => {
         { 'content-type': 'application/json' }
       );
 
-      dispatch({ type: LOGIN, token: login.idToken, userId: login.localId });
+      dispatch(authenticate(login.localId, login.idToken));
+      const expirationDate = new Date(
+        new Date().getTime() + parseInt(login.expiresIn) * 1000
+      );
+
+      saveDataToStorage(login.idToken, login.localId, expirationDate);
     } catch (error) {
       throw error;
     }
   };
+};
+
+const saveDataToStorage = (token, userId, expirationDate) => {
+  AsyncStorage.setItem(
+    'userData',
+    JSON.stringify({
+      token: token,
+      userId: userId,
+      expiryDate: expirationDate.toISOString(),
+    })
+  );
+};
+
+export const authenticate = (userId, token) => {
+  return { type: AUTHENTICATE, userId: userId, token: token };
 };

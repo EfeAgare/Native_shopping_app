@@ -13,6 +13,7 @@ import { Ionicons } from '@expo/vector-icons';
 import UserProductScreen from '../screens/user/UserProductScreen';
 import EditProductScreen from '../screens/user/EditProductScreen';
 import AuthScreen from '../screens/user/AuthScreen';
+import StartUpScreen from '../screens/user/StartUpScreen';
 
 const defaultNavOptions = {
   headerStyle: {
@@ -107,6 +108,7 @@ const AuthNavigator = createStackNavigator(
 );
 
 const MainNavigator = createSwitchNavigator({
+  Start: StartUpScreen,
   Auth: AuthNavigator,
   Shop: ShopNavigator,
 });

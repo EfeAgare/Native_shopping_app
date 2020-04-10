@@ -9,3 +9,4 @@ export const GET_ALL_PRODUCT = 'GET_ALL_PRODUCT';
 export const GET_ORDERS = 'GET_ORDERS';
 export const SIGN_UP = 'SIGN_UP';
 export const LOGIN = 'LOGIN';
+export const AUTHENTICATE = 'AUTHENTICATE';
