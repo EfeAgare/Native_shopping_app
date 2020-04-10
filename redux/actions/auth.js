@@ -1,9 +1,10 @@
 import { AsyncStorage } from 'react-native';
 
-import { AUTHENTICATE } from '../constants/actionIndentifier';
+import { AUTHENTICATE, LOGOUT } from '../constants/actionIndentifier';
 import { sendHttpRequest } from '../utils/apiInstance';
 import { FIRE_BASE_API } from 'react-native-dotenv';
 
+let timer;
 export const signupUser = (email, password) => {
   return async (dispatch) => {
     try {
@@ -18,7 +19,13 @@ export const signupUser = (email, password) => {
         { 'content-type': 'application/json' }
       );
 
-      dispatch(authenticate(signUp.localId, signUp.idToken));
+      dispatch(
+        authenticate(
+          signUp.localId,
+          signUp.idToken,
+          parseInt(signUp.expiresIn) * 1000
+        )
+      );
       const expirationDate = new Date(
         new Date().getTime() + parseInt(signUp.expiresIn) * 1000
       );
@@ -43,7 +50,13 @@ export const loginUser = (email, password) => {
         { 'content-type': 'application/json' }
       );
 
-      dispatch(authenticate(login.localId, login.idToken));
+      dispatch(
+        authenticate(
+          login.localId,
+          login.idToken,
+          parseInt(login.expiresIn) * 1000
+        )
+      );
       const expirationDate = new Date(
         new Date().getTime() + parseInt(login.expiresIn) * 1000
       );
@@ -66,6 +79,29 @@ const saveDataToStorage = (token, userId, expirationDate) => {
   );
 };
 
-export const authenticate = (userId, token) => {
-  return { type: AUTHENTICATE, userId: userId, token: token };
+export const authenticate = (userId, token, expiryTime) => {
+  return (dispatch) => {
+    dispatch(setLogoutTimer(expiryTime));
+    dispatch({ type: AUTHENTICATE, userId: userId, token: token });
+  };
+};
+
+export const logout = () => {
+  clearLogoutTimer();
+  AsyncStorage.removeItem('userData');
+  return { type: LOGOUT };
+};
+
+const setLogoutTimer = (expirationTime) => {
+  return (dispatch) => {
+    timer = setTimeout(() => {
+      dispatch(logout());
+    }, expirationTime);
+  };
+};
+
+const clearLogoutTimer = () => {
+  if (timer) {
+    clearTimeout(timer);
+  }
 };

@@ -28,8 +28,10 @@ const StartUpScreen = (props) => {
         return;
       }
 
-      dispatch(authenticate(userId, token));
+      const expirationTime = expirationDate.getTime() - new Date().getTime();
+
       props.navigation.navigate('Shop');
+      dispatch(authenticate(userId, token, expirationTime));
     };
     alreadyLogin();
   }, [dispatch]);
