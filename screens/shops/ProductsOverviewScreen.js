@@ -126,6 +126,7 @@ export default ProductsOverviewScreen;
 export const productsOverviewScreenOptions = (navData) => {
   return {
     headerTitle: 'All Products',
+    headerTitleAlign: 'center',
     headerRight: () => (
       <HeaderButtons HeaderButtonComponent={CustomHeaderButtons}>
         <Item

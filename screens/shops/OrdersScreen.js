@@ -52,6 +52,7 @@ const OrdersScreen = (props) => {
 export const ordersScreenOptions = (navData) => {
   return {
     headerTitle: 'Your Orders',
+    headerTitleAlign: 'center',
     headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={CustomHeaderButtons}>
         <Item

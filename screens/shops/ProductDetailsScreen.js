@@ -44,6 +44,7 @@ export const productDetailsScreenOptions = (navData) => {
     headerTitle: navData.route.params
       ? navData.route.params.productTitle
       : null,
+    headerTitleAlign: 'center',
   };
 };
 

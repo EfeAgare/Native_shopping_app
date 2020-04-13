@@ -86,6 +86,7 @@ const CartScreen = () => {
 export const cartScreenOptions = (navData) => {
   return {
     headerTitle: 'Your Cart',
+    headerTitleAlign: 'center',
     headerRight: () => (
       <HeaderButtons HeaderButtonComponent={CustomHeaderButtons}>
         <Item

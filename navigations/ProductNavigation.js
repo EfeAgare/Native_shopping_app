@@ -137,7 +137,7 @@ export const ShopNavigator = () => {
         options={{
           drawerIcon: (props) => (
             <Ionicons
-              name={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}
+              name={Platform.OS === 'android' ? 'md-albums' : 'ios-albums'}
               size={23}
               color={props.color}
             />
@@ -163,7 +163,7 @@ export const ShopNavigator = () => {
         options={{
           drawerIcon: (props) => (
             <Ionicons
-              name={Platform.OS === 'android' ? 'md-list' : 'ios-list'}
+              name={Platform.OS === 'android' ? 'md-home' : 'ios-home'}
               size={23}
               color={props.color}
             />

@@ -73,6 +73,7 @@ const UserProductScreen = (props) => {
 export const userProductScreenOptions = (navData) => {
   return {
     headerTitle: 'My Products',
+    headerTitleAlign: 'center',
     headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={CustomHeaderButtons}>
         <Item

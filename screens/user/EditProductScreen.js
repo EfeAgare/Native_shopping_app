@@ -224,6 +224,7 @@ export const editProductScreenOptions = (navData) => {
   const edit = navData.route.params ? navData.route.params.productId : null;
   return {
     headerTitle: edit ? 'Edit Product' : 'Create Product',
+    headerTitleAlign: 'center'
   };
 };
 
