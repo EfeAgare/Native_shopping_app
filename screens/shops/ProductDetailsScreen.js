@@ -13,7 +13,7 @@ import Colors from '../../constants/Colors';
 import * as cartActions from '../../redux/actions/cart';
 
 const ProductDetailsScreen = (props) => {
-  const productId = props.navigation.getParam('productId');
+  const productId = props.route.params ? props.route.params.productId : null;
 
   const dispatch = useDispatch(); // mapDispatchToProps
 
@@ -31,7 +31,7 @@ const ProductDetailsScreen = (props) => {
           onPress={() => dispatch(cartActions.addToCart(selectedProduct))}
           color={Colors.primary}
         />
-      </View> 
+      </View>
 
       <Text style={styles.price}>${selectedProduct.price.toFixed(2)}</Text>
       <Text style={styles.description}>{selectedProduct.description}</Text>
@@ -41,7 +41,9 @@ const ProductDetailsScreen = (props) => {
 
 export const productDetailsScreenOptions = (navData) => {
   return {
-    headerTitle: navData.navigation.getParam('productTitle'),
+    headerTitle: navData.route.params
+      ? navData.route.params.productTitle
+      : null,
   };
 };
 

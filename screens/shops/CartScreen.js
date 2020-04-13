@@ -91,11 +91,7 @@ export const cartScreenOptions = (navData) => {
         <Item
           title={'Menu'}
           iconName={Platform.OS === 'android' ? 'md-list' : 'ios-list'}
-          onPress={() =>
-            navData.navigation.navigate({
-              routeName: 'ProductsOverview',
-            })
-          }
+          onPress={() => navData.navigation.navigate('ProductsOverview')}
         />
       </HeaderButtons>
     ),

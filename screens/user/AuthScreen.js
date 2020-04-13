@@ -83,8 +83,8 @@ const AuthScreen = (props) => {
 
   return (
     <KeyboardAvoidingView
-      behavior='padding'
-      keyboardVerticalOffset={50}
+      // behavior='padding'
+      keyboardVerticalOffset={10}
       style={styles.screen}
     >
       <LinearGradient colors={['#ffedff', '#ffe3ff']} style={styles.gradient}>
@@ -122,7 +122,7 @@ const AuthScreen = (props) => {
                 disabled={!formState.formIsValid}
               />
             </View>
-            <View>
+            <View style={styles.buttonContainer}>
               {isLoading ? (
                 <View style={styles.centered}>
                   <ActivityIndicator size='small' color={Colors.primary} />
@@ -147,7 +147,7 @@ const AuthScreen = (props) => {
 export default AuthScreen;
 
 export const authScreenOptions = (navData) => {
-  const title = navData.navigation.getParam('title');
+  const title = navData.route.params ? navData.route.params.title : null;
   return {
     headerTitle: title,
   };
@@ -171,9 +171,10 @@ const styles = StyleSheet.create({
     height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: -200,
+    // marginTop: -200,
   },
   buttonContainer: {
     marginTop: 15,
+    // padding: 10,
   },
 });

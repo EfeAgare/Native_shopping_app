@@ -12,11 +12,8 @@ const UserProductScreen = (props) => {
   const userProduct = useSelector((state) => state.products.userProduct);
 
   const editProductHandler = (id) => {
-    props.navigation.navigate({
-      routeName: 'EditScreen',
-      params: {
-        productId: id,
-      },
+    props.navigation.navigate('EditScreen', {
+      productId: id,
     });
   };
 
