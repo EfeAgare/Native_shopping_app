@@ -10,3 +10,4 @@ export const GET_ORDERS = 'GET_ORDERS';
 export const SIGN_UP = 'SIGN_UP';
 export const LOGOUT = 'LOGOUT';
 export const AUTHENTICATE = 'AUTHENTICATE';
+export const DID_TRY_LOGIN = 'DID_TRY_LOGIN';

@@ -209,7 +209,7 @@ const EditProductScreen = (props) => {
   );
 };
 
-EditProductScreen.navigationOptions = (navData) => {
+export const editProductScreenOptions = (navData) => {
   const edit = navData.navigation.getParam('productId');
   const submit = navData.navigation.getParam('submit');
   return {

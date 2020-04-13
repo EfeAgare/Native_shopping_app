@@ -83,7 +83,7 @@ const CartScreen = () => {
   );
 };
 
-CartScreen.navigationOptions = (navData) => {
+export const cartScreenOptions = (navData) => {
   return {
     headerTitle: 'Your Cart',
     headerRight: () => (

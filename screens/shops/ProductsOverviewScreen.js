@@ -29,7 +29,6 @@ const ProductsOverviewScreen = (props) => {
     } catch (error) {
       setErrorMessage(error);
     }
-
   }, [dispatch, setErrorMessage]);
 
   const availableProduct = useSelector(
@@ -44,11 +43,11 @@ const ProductsOverviewScreen = (props) => {
 
   // set up listener for live update, subsequent loading
   useEffect(() => {
-    const willFocus = props.navigation.addListener('willFocus', () => {
+    const unsubscribe = props.navigation.addListener('focus', () => {
       loadProducts();
     });
     return () => {
-      willFocus.remove(); // clean up
+      unsubscribe(); // clean up
     };
   }, [loadProducts]);
 
@@ -124,7 +123,7 @@ const ProductsOverviewScreen = (props) => {
 
 export default ProductsOverviewScreen;
 
-ProductsOverviewScreen.navigationOptions = (navData) => {
+export const productsOverviewScreenOptions = (navData) => {
   return {
     headerTitle: 'All Products',
     headerRight: () => (

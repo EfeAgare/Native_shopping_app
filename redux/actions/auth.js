@@ -1,6 +1,10 @@
 import { AsyncStorage } from 'react-native';
 
-import { AUTHENTICATE, LOGOUT } from '../constants/actionIndentifier';
+import {
+  AUTHENTICATE,
+  LOGOUT,
+  DID_TRY_LOGIN,
+} from '../constants/actionIndentifier';
 import { sendHttpRequest } from '../utils/apiInstance';
 import { FIRE_BASE_API } from 'react-native-dotenv';
 
@@ -104,4 +108,8 @@ const clearLogoutTimer = () => {
   if (timer) {
     clearTimeout(timer);
   }
+};
+
+export const setDidTryLogin = () => {
+  return { type: DID_TRY_LOGIN };
 };

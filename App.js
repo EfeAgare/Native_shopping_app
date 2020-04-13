@@ -5,7 +5,7 @@ import * as Font from 'expo-font';
 import { enableScreens } from 'react-native-screens';
 
 import { store } from './redux/store/store';
-import NavigationContainer from './navigations/NavigationContainer';
+import AppNavigator from './navigations/AppNavigator';
 
 enableScreens();
 
@@ -32,7 +32,7 @@ export default function App() {
   }
   return (
     <Provider store={store}>
-      <NavigationContainer />
+      <AppNavigator />
     </Provider>
   );
 }

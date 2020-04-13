@@ -65,7 +65,7 @@ const AuthScreen = (props) => {
 
     try {
       await dispatch(auth);
-      props.navigation.navigate('Shop');
+      // props.navigation.navigate('Shop');
     } catch (error) {
       console.log(error.message);
       setIsLoading(false);
@@ -146,7 +146,7 @@ const AuthScreen = (props) => {
 
 export default AuthScreen;
 
-AuthScreen.navigationOptions = (navData) => {
+export const authScreenOptions = (navData) => {
   const title = navData.navigation.getParam('title');
   return {
     headerTitle: title,
