@@ -150,6 +150,7 @@ export const authScreenOptions = (navData) => {
   const title = navData.route.params ? navData.route.params.title : null;
   return {
     headerTitle: title,
+    headerTitleAlign: 'center'
   };
 };
 

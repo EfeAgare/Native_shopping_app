@@ -107,6 +107,10 @@ export const ShopNavigator = () => {
   const dispatch = useDispatch();
   return (
     <ShopDrawerNavigator.Navigator
+      drawerStyle={{
+        width: 240,
+        paddingTop: 30
+      }}
       drawerContentOptions={{
         activeTintColors: Colors.primary,
       }}
@@ -120,7 +124,6 @@ export const ShopNavigator = () => {
                 color={Colors.primary}
                 onPress={() => {
                   dispatch(logout());
-                  props.navigation.navigate('Auth');
                 }}
               />
             </SafeAreaView>

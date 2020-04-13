@@ -25,7 +25,7 @@ const authReducers = (state = initialState, action) => {
 
     case LOGOUT:
       return {
-        ...state,
+        initialState,
         didTryAutoLogin: true,
       };
 
